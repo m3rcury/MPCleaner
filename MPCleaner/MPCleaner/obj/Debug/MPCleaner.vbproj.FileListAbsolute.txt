@@ -1,0 +1,33 @@
+C:\Users\Rudolph\AppData\Local\Temporary Projects\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Rudolph\AppData\Local\Temporary Projects\ClassLibrary1\obj\Debug\MPCleaner.Resources.resources
+C:\Users\Rudolph\AppData\Local\Temporary Projects\ClassLibrary1\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\Rudolph\AppData\Local\Temporary Projects\ClassLibrary1\obj\Debug\GenerateResource.write.1.tlog
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.pdb
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.xml
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Core.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Dialogs.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Bass.Net.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\DirectShowLib.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Utils.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\BassVisAPI.Net.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\taglib-sharp.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\AxInterop.WMPLib.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\edtftpnet-1.2.2.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\BassRegistration.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\MediaPortal.Support.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Common.Utils.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Interop.WMPLib.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Interop.SHDocVw.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\log4net.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Debug\Ionic.Zip.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\ResolveAssemblyReference.cache
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.Resources.resources
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource.read.1.tlog
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource.write.1.tlog
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.dll
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.xml
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.pdb
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.MPCleanerForm.resources
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource-ResGen.read.1.tlog
+I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource-ResGen.write.1.tlog
