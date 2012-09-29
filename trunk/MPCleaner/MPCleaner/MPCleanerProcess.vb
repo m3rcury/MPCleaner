@@ -52,10 +52,14 @@ Public Class MPCleanerProcess
         ' set startup value for first run
         _already_executed = False
 
-        Using XMLreader As MediaPortal.Profile.Settings = New MediaPortal.Profile.Settings(file)
+        Using XMLreader As MediaPortal.Profile.Settings = New MediaPortal.Profile.Settings(Config.GetFile(Config.Dir.Base, "MediaPortalDirs.xml"))
 
-            _database = XMLreader.GetValueAsString("Path", "database", Config.GetFolder(Config.Dir.Database))
-            _thumbs = XMLreader.GetValueAsString("Path", "thumbs", Config.GetFolder(Config.Dir.Thumbs))
+            _database = XMLreader.GetValueAsString("Path", "Database", Config.GetFolder(Config.Dir.Database))
+            _thumbs = XMLreader.GetValueAsString("Path", "Thumbs", Config.GetFolder(Config.Dir.Thumbs))
+
+        End Using
+
+        Using XMLreader As MediaPortal.Profile.Settings = New MediaPortal.Profile.Settings(file)
 
             movingpictures = XMLreader.GetValueAsBool("Plugins", "MovingPictures", False)
             tvseries = XMLreader.GetValueAsBool("Plugins", "TVSeries", False)
@@ -149,6 +153,7 @@ Public Class MPCleanerProcess
 
                 ' call the cleaning processes
                 If movingpictures Then Process_MovingPictures()
+                If movingpictures Then Process_DVDArt()
                 If tvseries Then Process_TVSeries()
                 If youtubefm Then Process_YouTubefm()
                 If music Then Process_Music()
@@ -319,6 +324,56 @@ Public Class MPCleanerProcess
             Next
 
         End If
+
+    End Sub
+
+    Private Sub Process_DVDArt()
+
+        Dim newpath, List(1) As String
+
+        ' populate used DVDArt
+
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLiteCommand
+        Dim SQLreader As SQLiteDataReader
+
+        If Not FileSystem.FileExists(_database + "dvdart.db3") Then
+            Exit Sub
+        End If
+
+        Log.Info("MPCleaner: processing dvdart - start.")
+
+        SQLconnect.ConnectionString = "Data Source=" + _database + "dvdart.db3"
+
+        SQLconnect.Open()
+
+        SQLcommand = SQLconnect.CreateCommand
+
+        SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies"
+
+        SQLreader = SQLcommand.ExecuteReader()
+
+        Array.Clear(List, 0, 2)
+
+        While SQLreader.Read()
+
+            List(0) &= SQLreader(0) & "|"
+
+        End While
+
+        SQLconnect.Close()
+
+        If List(0) = Nothing Then List(0) = ""
+
+        ' check DVDArt on disk which are not in DB
+
+        newpath = _thumbs & "MovingPictures\DVDArt\FullSize"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\DVDArt\FullSize")
+
+        newpath = _thumbs & "MovingPictures\DVDArt\Thumbs"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\DVDArt\Thumbs")
+
+        Log.Info("MPCleaner: processing DVDArt - complete.")
 
     End Sub
 

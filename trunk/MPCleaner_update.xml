@@ -72,24 +72,33 @@
           <Major>1</Major>
           <Minor>1</Minor>
           <Build>0</Build>
-          <Revision>5</Revision>
+          <Revision>6</Revision>
         </Version>
         <ExtensionDescription>This plugin will scan you thumbs folders and by comparing what images are stored in the MediaPortal databases, will delete the rest, thus freeing up space on your HTPC.</ExtensionDescription>
         <VersionDescription>This version caters for MovingPictures, MP-TVSeries, Music and YouTube.fm.
 
+
+
 TVSeries Episode thumb nails whose respective episode was deleted will also be cleaned up.
+
+
 
 A compete scheduler has been included to select when plugins should run.
 
 
+
+
+
 ** Fixed a bug reported by Luca Brasi in thread #40 of forum. **
+
 ** Fixed issue with version number mixup **
+
 ** Fixed a further issue reported by Luca Brasi. **</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
         <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=225&amp;cf_id=24</OnlineLocation>
-        <ReleaseDate>2012-07-09T09:16:27</ReleaseDate>
+        <ReleaseDate>2012-07-11T09:16:27</ReleaseDate>
         <Tags>movingpictures;tvseries,youtube.fm;music;fanart;cleaner</Tags>
-        <Location>E:\Software\MediaPortal\MPCleaner\MPCleaner-v1.1.0.5.mpe1</Location>
+        <Location>E:\Software\MediaPortal\MPCleaner\MPCleaner-v1.1.0.6.mpe1</Location>
         <Params>
           <Items>
             <SectionParam Name="Online Icon">
@@ -105,12 +114,12 @@ A compete scheduler has been included to select when plugins should run.
  If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value>http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1478.png;http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1479.png;http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1481.png</Value>
+              <Value>http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1478.png;http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1496.png;http://www.team-mediaportal.com/components/com_mtree/img/listings/m/1481.png</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
             <SectionParam Name="Force to uninstall on update">
-              <Value>yes</Value>
+              <Value>YES</Value>
               <ValueType>Bool</ValueType>
               <Description>Show dialog and force to uninstall previous version when updating an extension. Should only be disabled if you are using an NSIS/MSI installer.</Description>
             </SectionParam>

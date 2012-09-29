@@ -2,14 +2,14 @@
 
 Public Class MPCleanerForm
 
-    Dim _database, _thumbs, _lastrun, _cpu, _time As String
+    Dim _lastrun, _cpu, _time As String
     Dim _cache, _delay As Integer
 
     Private Sub MPCleanerForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         ' extract System.Data.SQLite.dll from resources to application library
         Dim dll As String = IO.Directory.GetCurrentDirectory() & "\System.Data.SQLite.dll"
-        My.Computer.FileSystem.WriteAllBytes(dll, My.Resources.System_Data_SQLite, False)
+        If Not IO.File.Exists(dll) Then My.Computer.FileSystem.WriteAllBytes(dll, My.Resources.System_Data_SQLite, False)
 
         '  get default paths from XML configuration file
 
@@ -17,9 +17,6 @@ Public Class MPCleanerForm
         Dim cache_value, delay_value, checktrigger_value As String
 
         Using XMLreader As MediaPortal.Profile.Settings = New MediaPortal.Profile.Settings(Config.GetFile(Config.Dir.Config, "MPCleaner.xml"))
-
-            _database = XMLreader.GetValueAsString("Path", "database", Config.GetFolder(Config.Dir.Database))
-            _thumbs = XMLreader.GetValueAsString("Path", "thumbs", Config.GetFolder(Config.Dir.Thumbs))
 
             Deletetotrash.Checked = XMLreader.GetValueAsBool("Delete", "trash", True)
 
@@ -47,8 +44,6 @@ Public Class MPCleanerForm
 
         ' set up screen fields
 
-        tb_dbpath.Text = _database
-        tb_thumbpath.Text = _thumbs
         nud_cache.Value = _cache
         cb_cache.Text = cache_value
         nud_delay.Value = _delay
@@ -66,44 +61,6 @@ Public Class MPCleanerForm
         rb_cpu.Checked = (when_to_run = 1)
         rb_time.Checked = (when_to_run = 2)
 
-    End Sub
-
-    Private Sub Browse1_Click(sender As System.Object, e As System.EventArgs)
-
-        Dim objShell As Object
-        Dim objFolder As Object
-
-        On Error GoTo SubExit
-
-        objShell = CreateObject("Shell.Application")
-        objFolder = objShell.BrowseForFolder(0, "Please select database folder", 0, _database)
-
-        If IsError(objFolder.Items.Item.Path) Then
-            tb_dbpath.Text = CStr(objFolder)
-        Else
-            tb_dbpath.Text = objFolder.Items.Item.Path
-        End If
-
-SubExit:
-    End Sub
-
-    Private Sub Browse2_Click(sender As System.Object, e As System.EventArgs)
-
-        Dim objShell As Object
-        Dim objFolder As Object
-
-        On Error GoTo SubExit
-
-        objShell = CreateObject("Shell.Application")
-        objFolder = objShell.BrowseForFolder(0, "Please select thumbs folder", 0, _thumbs)
-
-        If IsError(objFolder.Items.Item.Path) Then
-            tb_thumbpath.Text = CStr(objFolder)
-        Else
-            tb_thumbpath.Text = objFolder.Items.Item.Path
-        End If
-
-SubExit:
     End Sub
 
     Private Sub Save_Click(sender As System.Object, e As System.EventArgs) Handles Save.Click
@@ -129,9 +86,6 @@ SubExit:
         End If
 
         Using XMLwriter As MediaPortal.Profile.Settings = New MediaPortal.Profile.Settings(Config.GetFile(Config.Dir.Config, "MPCleaner.xml"))
-
-            XMLwriter.SetValue("Path", "database", tb_dbpath.Text)
-            XMLwriter.SetValue("Path", "thumbs", tb_thumbpath.Text)
 
             XMLwriter.SetValueAsBool("Delete", "trash", Deletetotrash.Checked)
 
