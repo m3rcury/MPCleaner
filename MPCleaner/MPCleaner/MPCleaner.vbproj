@@ -127,7 +127,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MPCleaner_enabled.png" />
+    <EmbeddedResource Include="Resources\MPCleaner_enabled.png">
+      <CustomToolNamespace>MPCleaner</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\MPCleaner_disabled.png">

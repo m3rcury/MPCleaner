@@ -30,13 +30,6 @@ Partial Class MPCleanerForm
         Me.Deletetotrash = New System.Windows.Forms.RadioButton()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.Paths = New System.Windows.Forms.TabPage()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.Browse2 = New System.Windows.Forms.Button()
-        Me.Browse1 = New System.Windows.Forms.Button()
-        Me.tb_thumbpath = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.tb_dbpath = New System.Windows.Forms.TextBox()
         Me.Plugins = New System.Windows.Forms.TabPage()
         Me.cb_cache = New System.Windows.Forms.ComboBox()
         Me.nud_cache = New System.Windows.Forms.NumericUpDown()
@@ -66,7 +59,6 @@ Partial Class MPCleanerForm
         Me.rb_daily = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
-        Me.Paths.SuspendLayout()
         Me.Plugins.SuspendLayout()
         CType(Me.nud_cache, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Scheduler.SuspendLayout()
@@ -141,7 +133,6 @@ Partial Class MPCleanerForm
         '
         'TabControl1
         '
-        Me.TabControl1.Controls.Add(Me.Paths)
         Me.TabControl1.Controls.Add(Me.Plugins)
         Me.TabControl1.Controls.Add(Me.Scheduler)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -150,81 +141,6 @@ Partial Class MPCleanerForm
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(393, 311)
         Me.TabControl1.TabIndex = 62
-        '
-        'Paths
-        '
-        Me.Paths.BackColor = System.Drawing.Color.Transparent
-        Me.Paths.Controls.Add(Me.TextBox4)
-        Me.Paths.Controls.Add(Me.Browse2)
-        Me.Paths.Controls.Add(Me.Browse1)
-        Me.Paths.Controls.Add(Me.tb_thumbpath)
-        Me.Paths.Controls.Add(Me.TextBox3)
-        Me.Paths.Controls.Add(Me.tb_dbpath)
-        Me.Paths.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Paths.Location = New System.Drawing.Point(4, 25)
-        Me.Paths.Name = "Paths"
-        Me.Paths.Padding = New System.Windows.Forms.Padding(3)
-        Me.Paths.Size = New System.Drawing.Size(385, 282)
-        Me.Paths.TabIndex = 0
-        Me.Paths.Text = "Paths"
-        '
-        'TextBox4
-        '
-        Me.TextBox4.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.TextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox4.Location = New System.Drawing.Point(6, 73)
-        Me.TextBox4.Multiline = True
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(321, 19)
-        Me.TextBox4.TabIndex = 57
-        Me.TextBox4.Text = "Choose Thumbs folder"
-        '
-        'Browse2
-        '
-        Me.Browse2.Location = New System.Drawing.Point(314, 97)
-        Me.Browse2.Name = "Browse2"
-        Me.Browse2.Size = New System.Drawing.Size(62, 23)
-        Me.Browse2.TabIndex = 55
-        Me.Browse2.Text = "Browse"
-        Me.Browse2.UseVisualStyleBackColor = True
-        '
-        'Browse1
-        '
-        Me.Browse1.Location = New System.Drawing.Point(314, 40)
-        Me.Browse1.Name = "Browse1"
-        Me.Browse1.Size = New System.Drawing.Size(62, 23)
-        Me.Browse1.TabIndex = 52
-        Me.Browse1.Text = "Browse"
-        Me.Browse1.UseVisualStyleBackColor = True
-        '
-        'tb_thumbpath
-        '
-        Me.tb_thumbpath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_thumbpath.Location = New System.Drawing.Point(6, 98)
-        Me.tb_thumbpath.Name = "tb_thumbpath"
-        Me.tb_thumbpath.Size = New System.Drawing.Size(303, 20)
-        Me.tb_thumbpath.TabIndex = 56
-        '
-        'TextBox3
-        '
-        Me.TextBox3.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.TextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(6, 16)
-        Me.TextBox3.Multiline = True
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(321, 19)
-        Me.TextBox3.TabIndex = 54
-        Me.TextBox3.Text = "Choose database folder"
-        '
-        'tb_dbpath
-        '
-        Me.tb_dbpath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tb_dbpath.Location = New System.Drawing.Point(6, 41)
-        Me.tb_dbpath.Name = "tb_dbpath"
-        Me.tb_dbpath.Size = New System.Drawing.Size(303, 20)
-        Me.tb_dbpath.TabIndex = 53
         '
         'Plugins
         '
@@ -548,12 +464,10 @@ Partial Class MPCleanerForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MPCleanerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MPCleaner v1.1.0.5"
+        Me.Text = "MPCleaner v1.1.0.6"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
-        Me.Paths.ResumeLayout(False)
-        Me.Paths.PerformLayout()
         Me.Plugins.ResumeLayout(False)
         Me.Plugins.PerformLayout()
         CType(Me.nud_cache, System.ComponentModel.ISupportInitialize).EndInit()
@@ -583,13 +497,6 @@ Partial Class MPCleanerForm
     Friend WithEvents cb_TVSeries As System.Windows.Forms.CheckBox
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents cb_MovingPictures As System.Windows.Forms.CheckBox
-    Friend WithEvents Paths As System.Windows.Forms.TabPage
-    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
-    Friend WithEvents Browse2 As System.Windows.Forms.Button
-    Friend WithEvents Browse1 As System.Windows.Forms.Button
-    Friend WithEvents tb_thumbpath As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
-    Friend WithEvents tb_dbpath As System.Windows.Forms.TextBox
     Friend WithEvents Scheduler As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents rb_always As System.Windows.Forms.RadioButton
