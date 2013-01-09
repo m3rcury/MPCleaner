@@ -464,7 +464,7 @@ Public Class MPCleanerProcess
 
         While SQLreader.Read()
 
-            List(0) &= Left(SQLreader(0), InStr(SQLreader(0), "\") - 1) & "|"
+            List(0) &= Left(SQLreader(0), InStr(2, SQLreader(0), "\") - 1) & "|"
 
         End While
 
