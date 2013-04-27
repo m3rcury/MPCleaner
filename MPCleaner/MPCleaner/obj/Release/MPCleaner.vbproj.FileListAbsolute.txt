@@ -45,5 +45,5 @@ E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\ResGen.write.1.tlog
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.xml
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.pdb
-E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.dll
-E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.dll
+E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.exe
+E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.exe

@@ -8,8 +8,9 @@ Imports System.Data.SQLite
 Public Class MPCleanerProcess
 
     Dim _cache As Integer
+    Dim checkplayer As Integer = 60
     Dim _database, _thumbs, delete, cache_value As String
-    Dim movingpictures, tvseries, music, youtubefm, trash As Boolean
+    Dim movingpictures, tvseries, music, youtubefm, trash, pause As Boolean
 
     Public Function CPU_Usage_Percent() As String
 
@@ -24,12 +25,20 @@ Public Class MPCleanerProcess
 
     End Function
 
-    Private Sub wait(ByVal seconds As Long)
+    Private Sub wait(ByVal seconds As Long, Optional ByVal verbose As Boolean = True)
 
-        Log.Info("MPCleaner: process plugin sleeping " & seconds.ToString & " seconds.....")
+        If verbose Then Log.Info("MPCleaner: process plugin sleeping " & seconds.ToString & " seconds.....")
 
         System.Threading.Thread.Sleep(seconds * 1000)
 
+    End Sub
+
+    Private Sub CheckPlayerplaying(ByVal seconds As Long)
+        If pause Then
+            Do While MediaPortal.Player.g_Player.Playing
+                wait(seconds, False)
+            Loop
+        End If
     End Sub
 
     Public Sub MPCleanerProcess()
@@ -76,6 +85,8 @@ Public Class MPCleanerProcess
             _time = XMLreader.GetValueAsString("Scheduler", "run at", 0)
             _checktrigger = XMLreader.GetValueAsInt("Scheduler", "check trigger", 1)
             checktrigger_value = XMLreader.GetValueAsString("Scheduler", "check trigger value", "minutes")
+            pause = XMLreader.GetValueAsString("Scheduler", "pause while playing", False)
+
             lastrun = XMLreader.GetValueAsString("Scheduler", "lastrun", Now.ToString)
 
             trash = XMLreader.GetValueAsBool("Delete", "trash", True)
@@ -99,6 +110,8 @@ Public Class MPCleanerProcess
         End If
 
         Do
+
+            ' ********* to enhance sleep/wake when periodicity is not always *********
 
             Log.Info("MPCleaner: process plugin last run on " & lastrun)
 
@@ -135,7 +148,7 @@ Public Class MPCleanerProcess
                 run = run And (current_time >= _time)
             End If
 
-            If run Then
+            If run Or MPCleanerForm._clean_now Then
 
                 ' check that both paths end with a "\"
 
@@ -153,8 +166,9 @@ Public Class MPCleanerProcess
 
                 ' call the cleaning processes
                 If movingpictures Then Process_MovingPictures()
-                If movingpictures Then Process_DVDArt()
+                If movingpictures Then Process_DVDArt1()
                 If tvseries Then Process_TVSeries()
+                If tvseries Then Process_DVDArt2()
                 If youtubefm Then Process_YouTubefm()
                 If music Then Process_Music()
 
@@ -212,6 +226,8 @@ Public Class MPCleanerProcess
 
             For Each filePath As String In IO.Directory.GetFiles(newpath)
 
+                CheckPlayerplaying(checkplayer)
+
                 fileattrib = IO.File.GetAttributes(filePath)
 
                 If DateDiff(date_interval, IO.File.GetLastAccessTime(filePath), Now) >= _cache And fileattrib <> FileAttribute.System Then
@@ -246,6 +262,8 @@ Public Class MPCleanerProcess
             Dim counter As Integer
 
             For Each filePath As String In IO.Directory.GetFiles(newpath)
+
+                CheckPlayerplaying(checkplayer)
 
                 fileattrib = IO.File.GetAttributes(filePath)
 
@@ -290,6 +308,8 @@ Public Class MPCleanerProcess
 
             For Each dirpath As String In IO.Directory.GetDirectories(newpath)
 
+                CheckPlayerplaying(checkplayer)
+
                 Dim dirname As String = IO.Path.GetFileName(dirpath)
 
                 If InStr(List.ToLower, dirname.ToLower) = 0 Then
@@ -317,6 +337,8 @@ Public Class MPCleanerProcess
 
             For Each dirpath As String In IO.Directory.GetDirectories(newpath)
 
+
+
                 Dim dirname As String = IO.Path.GetFileName(dirpath)
 
                 DeleteFanart_file(dirpath & "\Episodes", List, "filename", text, dirname & "\Episodes\")
@@ -327,7 +349,7 @@ Public Class MPCleanerProcess
 
     End Sub
 
-    Private Sub Process_DVDArt()
+    Private Sub Process_DVDArt1()
 
         Dim newpath, List(1) As String
 
@@ -341,16 +363,12 @@ Public Class MPCleanerProcess
             Exit Sub
         End If
 
-        Log.Info("MPCleaner: processing dvdart - start.")
+        Log.Info("MPCleaner: processing DVDArt (MovingPictures) - start.")
 
         SQLconnect.ConnectionString = "Data Source=" + _database + "dvdart.db3"
-
         SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
-        SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies"
-
+        SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies WHERE imdb_id <> ''"
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
@@ -373,7 +391,77 @@ Public Class MPCleanerProcess
         newpath = _thumbs & "MovingPictures\DVDArt\Thumbs"
         DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\DVDArt\Thumbs")
 
-        Log.Info("MPCleaner: processing DVDArt - complete.")
+        ' check ClearArt on disk which are not in DB
+
+        newpath = _thumbs & "MovingPictures\ClearArt\FullSize"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\ClearArt\FullSize")
+
+        newpath = _thumbs & "MovingPictures\ClearArt\Thumbs"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\ClearArt\Thumbs")
+
+        ' check ClearLogo on disk which are not in DB
+
+        newpath = _thumbs & "MovingPictures\ClearLogo\FullSize"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\ClearLogo\FullSize")
+
+        newpath = _thumbs & "MovingPictures\ClearLogo\Thumbs"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "MovingPictures\ClearLogo\Thumbs")
+
+        Log.Info("MPCleaner: processing DVDArt (MovingPictures) - complete.")
+
+    End Sub
+
+    Private Sub Process_DVDArt2()
+
+        Dim newpath, List(1) As String
+
+        ' populate used DVDArt
+
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLiteCommand
+        Dim SQLreader As SQLiteDataReader
+
+        If Not FileSystem.FileExists(_database + "dvdart.db3") Then
+            Exit Sub
+        End If
+
+        Log.Info("MPCleaner: processing DVDArt (TVSeries) - start.")
+
+        SQLconnect.ConnectionString = "Data Source=" + _database + "dvdart.db3"
+        SQLconnect.Open()
+        SQLcommand = SQLconnect.CreateCommand
+        SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies WHERE imdb_id <> ''"
+        SQLreader = SQLcommand.ExecuteReader()
+
+        Array.Clear(List, 0, 2)
+
+        While SQLreader.Read()
+
+            List(0) &= SQLreader(0) & "|"
+
+        End While
+
+        SQLconnect.Close()
+
+        If List(0) = Nothing Then List(0) = ""
+
+        ' check ClearArt on disk which are not in DB
+
+        newpath = _thumbs & "TVSeries\ClearArt\FullSize"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "TVSeries\ClearArt\FullSize")
+
+        newpath = _thumbs & "TVSeries\ClearArt\Thumbs"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "TVSeries\ClearArt\Thumbs")
+
+        ' check ClearLogo on disk which are not in DB
+
+        newpath = _thumbs & "TVSeries\ClearLogo\FullSize"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "TVSeries\ClearLogo\FullSize")
+
+        newpath = _thumbs & "TVSeries\ClearLogo\Thumbs"
+        DeleteFanart_file(newpath, List(0), "filenamenosuffix", "TVSeries\ClearLogo\Thumbs")
+
+        Log.Info("MPCleaner: processing DVDArt (TVSeries) - complete.")
 
     End Sub
 
@@ -394,21 +482,17 @@ Public Class MPCleanerProcess
         Log.Info("MPCleaner: processing movingpictures - start.")
 
         SQLconnect.ConnectionString = "Data Source=" + _database + "movingpictures.db3"
-
         SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
         SQLcommand.CommandText = "SELECT alternatecovers, backdropfullpath FROM movie_info"
-
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
 
         While SQLreader.Read()
 
-            List(0) &= SQLreader(0)
-            List(1) &= SQLreader(1) & "|"
+            If Len(SQLreader(0)) > 0 Then List(0) &= SQLreader(0)
+            If Len(SQLreader(1)) > 0 Then List(1) &= SQLreader(1) & "|"
 
         End While
 
@@ -453,11 +537,8 @@ Public Class MPCleanerProcess
         ' check Series on disk which are not in DB
 
         SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
-        SQLcommand.CommandText = "SELECT BannerFileNames FROM online_series"
-
+        SQLcommand.CommandText = "SELECT BannerFileNames FROM online_series WHERE BannerFileNames <> ''"
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
@@ -468,7 +549,7 @@ Public Class MPCleanerProcess
 
         End While
 
-        SQLconnect.Close()
+        SQLreader.Close()
 
         If List(0) = Nothing Then
             List(0) = ""
@@ -481,12 +562,8 @@ Public Class MPCleanerProcess
 
         ' check Episodes on disk which are not in DB
 
-        SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
-        SQLcommand.CommandText = "SELECT thumbFilename FROM online_episodes"
-
+        SQLcommand.CommandText = "SELECT thumbFilename FROM online_episodes WHERE thumbFilename <> ''"
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
@@ -497,7 +574,7 @@ Public Class MPCleanerProcess
 
         End While
 
-        SQLconnect.Close()
+        SQLreader.Close()
 
         If List(0) = Nothing Then List(0) = ""
 
@@ -508,18 +585,14 @@ Public Class MPCleanerProcess
 
         Array.Clear(List, 0, 2)
 
-        SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
         SQLcommand.CommandText = "SELECT BannerPath, ThumbnailPath FROM Fanart"
-
         SQLreader = SQLcommand.ExecuteReader()
 
         While SQLreader.Read()
 
-            List(0) &= SQLreader(0) & "|"
-            List(1) &= SQLreader(1) & "|"
+            If Len(SQLreader(0)) > 0 Then List(0) &= SQLreader(0) & "|"
+            If Len(SQLreader(1)) > 0 Then List(1) &= SQLreader(1) & "|"
 
         End While
 
@@ -565,16 +638,12 @@ Public Class MPCleanerProcess
 
         Log.Info("MPCleaner: processing youtube.fm - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "YouTubeFm_Data_V01.db3"
-
         ' check Artist images on disk which are not in DB
 
+        SQLconnect.ConnectionString = "Data Source=" + _database + "YouTubeFm_Data_V01.db3"
         SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
         SQLcommand.CommandText = "SELECT artist_name FROM artists"
-
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
@@ -618,15 +687,9 @@ Public Class MPCleanerProcess
         Log.Info("MPCleaner: processing music - start.")
 
         SQLconnect.ConnectionString = "Data Source=" + _database + "FanartHandler.db3"
-
-        ' check Artist images on disk which are not in DB
-
         SQLconnect.Open()
-
         SQLcommand = SQLconnect.CreateCommand
-
         SQLcommand.CommandText = "SELECT Disk_Image FROM Music_Fanart"
-
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
