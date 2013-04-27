@@ -4,15 +4,11 @@ Public Class MPCleanerForm
 
     Dim _lastrun, _cpu, _time As String
     Dim _cache, _delay As Integer
+    Public Shared _clean_now As Boolean = False
 
     Private Sub MPCleanerForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        ' extract System.Data.SQLite.dll from resources to application library
-        Dim dll As String = IO.Directory.GetCurrentDirectory() & "\System.Data.SQLite.dll"
-        If Not IO.File.Exists(dll) Then My.Computer.FileSystem.WriteAllBytes(dll, My.Resources.System_Data_SQLite, False)
-
         '  get default paths from XML configuration file
-
         Dim periodicity, when_to_run, checktrigger As Integer
         Dim cache_value, delay_value, checktrigger_value As String
 
@@ -36,6 +32,7 @@ Public Class MPCleanerForm
             _time = XMLreader.GetValueAsString("Scheduler", "run at", 0)
             checktrigger = XMLreader.GetValueAsInt("Scheduler", "check trigger", 1)
             checktrigger_value = XMLreader.GetValueAsString("Scheduler", "check trigger value", "minutes")
+            cb_pause.Checked = XMLreader.GetValueAsString("Scheduler", "pause while playing", False)
             _lastrun = XMLreader.GetValueAsString("Scheduler", "lastrun", Nothing)
 
         End Using
@@ -63,7 +60,7 @@ Public Class MPCleanerForm
 
     End Sub
 
-    Private Sub Save_Click(sender As System.Object, e As System.EventArgs) Handles Save.Click
+    Private Sub setSettings()
 
         Dim periodicity, when_to_run As Integer
 
@@ -105,10 +102,19 @@ Public Class MPCleanerForm
             XMLwriter.SetValue("Scheduler", "run at", mtb_time.Text)
             XMLwriter.SetValue("Scheduler", "check trigger", nud_checktrigger.Value)
             XMLwriter.SetValue("Scheduler", "check trigger value", cb_checktrigger.SelectedItem.ToString)
+            XMLwriter.SetValue("Scheduler", "pause while playing", cb_pause.Checked)
 
             If _lastrun = Nothing Then XMLwriter.SetValue("Scheduler", "lastrun", Now)
 
         End Using
+
+        MediaPortal.Profile.Settings.SaveCache()
+
+    End Sub
+
+    Private Sub Save_Click(sender As System.Object, e As System.EventArgs) Handles Save.Click
+
+        setSettings()
 
         MsgBox("Configuration Saved", MsgBoxStyle.Information, "MPCleaner")
 
@@ -119,6 +125,19 @@ Public Class MPCleanerForm
     Private Sub Cancel_Click(sender As System.Object, e As System.EventArgs) Handles Cancel.Click
 
         Return
+
+    End Sub
+
+    Private Sub b_clean_Click(sender As System.Object, e As System.EventArgs) Handles b_clean.Click
+
+        setSettings()
+
+        _clean_now = True
+
+        Dim mpc As New MPCleanerProcess
+        mpc.MPCleanerProcess()
+
+        _clean_now = False
 
     End Sub
 

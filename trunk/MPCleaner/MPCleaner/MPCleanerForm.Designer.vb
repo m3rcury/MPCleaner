@@ -26,11 +26,11 @@ Partial Class MPCleanerForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Save = New System.Windows.Forms.Button()
         Me.Cancel = New System.Windows.Forms.Button()
-        Me.Deletepermanent = New System.Windows.Forms.RadioButton()
-        Me.Deletetotrash = New System.Windows.Forms.RadioButton()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Plugins = New System.Windows.Forms.TabPage()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Deletetotrash = New System.Windows.Forms.RadioButton()
+        Me.Deletepermanent = New System.Windows.Forms.RadioButton()
         Me.cb_cache = New System.Windows.Forms.ComboBox()
         Me.nud_cache = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -41,9 +41,11 @@ Partial Class MPCleanerForm
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.cb_MovingPictures = New System.Windows.Forms.CheckBox()
         Me.Scheduler = New System.Windows.Forms.TabPage()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.cb_checktrigger = New System.Windows.Forms.ComboBox()
         Me.nud_checktrigger = New System.Windows.Forms.NumericUpDown()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.cb_pause = New System.Windows.Forms.CheckBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.cb_delay = New System.Windows.Forms.ComboBox()
         Me.nud_delay = New System.Windows.Forms.NumericUpDown()
@@ -57,12 +59,15 @@ Partial Class MPCleanerForm
         Me.rb_monthly = New System.Windows.Forms.RadioButton()
         Me.rb_weekly = New System.Windows.Forms.RadioButton()
         Me.rb_daily = New System.Windows.Forms.RadioButton()
-        Me.GroupBox1.SuspendLayout()
+        Me.b_clean = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.Plugins.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         CType(Me.nud_cache, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Scheduler.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         CType(Me.nud_checktrigger, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.nud_delay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -73,16 +78,16 @@ Partial Class MPCleanerForm
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ActiveCaption
-        Me.Label1.Location = New System.Drawing.Point(0, 406)
+        Me.Label1.Location = New System.Drawing.Point(0, 349)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(133, 13)
         Me.Label1.TabIndex = 45
-        Me.Label1.Text = "Copyright © 2012, m3rcury"
+        Me.Label1.Text = "Copyright © 2013, m3rcury"
         '
         'Save
         '
         Me.Save.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Save.Location = New System.Drawing.Point(240, 390)
+        Me.Save.Location = New System.Drawing.Point(240, 333)
         Me.Save.Name = "Save"
         Me.Save.Size = New System.Drawing.Size(75, 23)
         Me.Save.TabIndex = 44
@@ -92,44 +97,12 @@ Partial Class MPCleanerForm
         'Cancel
         '
         Me.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Cancel.Location = New System.Drawing.Point(321, 390)
+        Me.Cancel.Location = New System.Drawing.Point(321, 333)
         Me.Cancel.Name = "Cancel"
         Me.Cancel.Size = New System.Drawing.Size(75, 23)
         Me.Cancel.TabIndex = 57
         Me.Cancel.Text = "Cancel"
         Me.Cancel.UseVisualStyleBackColor = True
-        '
-        'Deletepermanent
-        '
-        Me.Deletepermanent.AutoSize = True
-        Me.Deletepermanent.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Deletepermanent.Location = New System.Drawing.Point(226, 19)
-        Me.Deletepermanent.Name = "Deletepermanent"
-        Me.Deletepermanent.Size = New System.Drawing.Size(154, 22)
-        Me.Deletepermanent.TabIndex = 59
-        Me.Deletepermanent.Text = "Delete Permanently"
-        Me.Deletepermanent.UseVisualStyleBackColor = True
-        '
-        'Deletetotrash
-        '
-        Me.Deletetotrash.AutoSize = True
-        Me.Deletetotrash.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Deletetotrash.Location = New System.Drawing.Point(10, 19)
-        Me.Deletetotrash.Name = "Deletetotrash"
-        Me.Deletetotrash.Size = New System.Drawing.Size(127, 22)
-        Me.Deletetotrash.TabIndex = 60
-        Me.Deletetotrash.Text = "Delete to Trash"
-        Me.Deletetotrash.UseVisualStyleBackColor = True
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.Deletetotrash)
-        Me.GroupBox1.Controls.Add(Me.Deletepermanent)
-        Me.GroupBox1.Location = New System.Drawing.Point(3, 329)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(394, 52)
-        Me.GroupBox1.TabIndex = 60
-        Me.GroupBox1.TabStop = False
         '
         'TabControl1
         '
@@ -145,6 +118,7 @@ Partial Class MPCleanerForm
         'Plugins
         '
         Me.Plugins.BackColor = System.Drawing.Color.Transparent
+        Me.Plugins.Controls.Add(Me.GroupBox1)
         Me.Plugins.Controls.Add(Me.cb_cache)
         Me.Plugins.Controls.Add(Me.nud_cache)
         Me.Plugins.Controls.Add(Me.Label3)
@@ -161,11 +135,43 @@ Partial Class MPCleanerForm
         Me.Plugins.TabIndex = 1
         Me.Plugins.Text = "Plugins"
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Deletetotrash)
+        Me.GroupBox1.Controls.Add(Me.Deletepermanent)
+        Me.GroupBox1.Location = New System.Drawing.Point(6, 223)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(373, 52)
+        Me.GroupBox1.TabIndex = 71
+        Me.GroupBox1.TabStop = False
+        '
+        'Deletetotrash
+        '
+        Me.Deletetotrash.AutoSize = True
+        Me.Deletetotrash.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Deletetotrash.Location = New System.Drawing.Point(23, 19)
+        Me.Deletetotrash.Name = "Deletetotrash"
+        Me.Deletetotrash.Size = New System.Drawing.Size(127, 22)
+        Me.Deletetotrash.TabIndex = 60
+        Me.Deletetotrash.Text = "Delete to Trash"
+        Me.Deletetotrash.UseVisualStyleBackColor = True
+        '
+        'Deletepermanent
+        '
+        Me.Deletepermanent.AutoSize = True
+        Me.Deletepermanent.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Deletepermanent.Location = New System.Drawing.Point(211, 19)
+        Me.Deletepermanent.Name = "Deletepermanent"
+        Me.Deletepermanent.Size = New System.Drawing.Size(154, 22)
+        Me.Deletepermanent.TabIndex = 59
+        Me.Deletepermanent.Text = "Delete Permanently"
+        Me.Deletepermanent.UseVisualStyleBackColor = True
+        '
         'cb_cache
         '
         Me.cb_cache.FormattingEnabled = True
         Me.cb_cache.Items.AddRange(New Object() {"days", "weeks", "months"})
-        Me.cb_cache.Location = New System.Drawing.Point(313, 252)
+        Me.cb_cache.Location = New System.Drawing.Point(313, 195)
         Me.cb_cache.Name = "cb_cache"
         Me.cb_cache.Size = New System.Drawing.Size(66, 24)
         Me.cb_cache.TabIndex = 70
@@ -173,7 +179,7 @@ Partial Class MPCleanerForm
         '
         'nud_cache
         '
-        Me.nud_cache.Location = New System.Drawing.Point(274, 252)
+        Me.nud_cache.Location = New System.Drawing.Point(274, 195)
         Me.nud_cache.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
         Me.nud_cache.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nud_cache.Name = "nud_cache"
@@ -185,7 +191,7 @@ Partial Class MPCleanerForm
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(3, 254)
+        Me.Label3.Location = New System.Drawing.Point(3, 197)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(274, 16)
         Me.Label3.TabIndex = 68
@@ -262,9 +268,8 @@ Partial Class MPCleanerForm
         'Scheduler
         '
         Me.Scheduler.BackColor = System.Drawing.Color.Transparent
-        Me.Scheduler.Controls.Add(Me.cb_checktrigger)
-        Me.Scheduler.Controls.Add(Me.nud_checktrigger)
-        Me.Scheduler.Controls.Add(Me.Label2)
+        Me.Scheduler.Controls.Add(Me.GroupBox5)
+        Me.Scheduler.Controls.Add(Me.GroupBox4)
         Me.Scheduler.Controls.Add(Me.GroupBox3)
         Me.Scheduler.Controls.Add(Me.GroupBox2)
         Me.Scheduler.Location = New System.Drawing.Point(4, 25)
@@ -274,11 +279,22 @@ Partial Class MPCleanerForm
         Me.Scheduler.TabIndex = 2
         Me.Scheduler.Text = "Scheduler"
         '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.cb_checktrigger)
+        Me.GroupBox5.Controls.Add(Me.nud_checktrigger)
+        Me.GroupBox5.Location = New System.Drawing.Point(192, 79)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(181, 62)
+        Me.GroupBox5.TabIndex = 17
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = " Check trigger every "
+        '
         'cb_checktrigger
         '
         Me.cb_checktrigger.FormattingEnabled = True
         Me.cb_checktrigger.Items.AddRange(New Object() {"seconds", "minutes", "hours"})
-        Me.cb_checktrigger.Location = New System.Drawing.Point(171, 252)
+        Me.cb_checktrigger.Location = New System.Drawing.Point(68, 29)
         Me.cb_checktrigger.Name = "cb_checktrigger"
         Me.cb_checktrigger.Size = New System.Drawing.Size(80, 24)
         Me.cb_checktrigger.TabIndex = 10
@@ -286,23 +302,36 @@ Partial Class MPCleanerForm
         '
         'nud_checktrigger
         '
-        Me.nud_checktrigger.Location = New System.Drawing.Point(131, 253)
+        Me.nud_checktrigger.Location = New System.Drawing.Point(21, 30)
         Me.nud_checktrigger.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
         Me.nud_checktrigger.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nud_checktrigger.Name = "nud_checktrigger"
-        Me.nud_checktrigger.Size = New System.Drawing.Size(36, 22)
+        Me.nud_checktrigger.Size = New System.Drawing.Size(43, 22)
         Me.nud_checktrigger.TabIndex = 8
         Me.nud_checktrigger.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.nud_checktrigger.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'Label2
+        'GroupBox4
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 255)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(127, 16)
-        Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Check trigger every "
+        Me.GroupBox4.Controls.Add(Me.cb_pause)
+        Me.GroupBox4.Location = New System.Drawing.Point(192, 7)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(181, 62)
+        Me.GroupBox4.TabIndex = 4
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = " Functionality "
+        '
+        'cb_pause
+        '
+        Me.cb_pause.AutoSize = True
+        Me.cb_pause.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.cb_pause.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_pause.Location = New System.Drawing.Point(8, 27)
+        Me.cb_pause.Name = "cb_pause"
+        Me.cb_pause.Size = New System.Drawing.Size(164, 19)
+        Me.cb_pause.TabIndex = 16
+        Me.cb_pause.Text = "Pause when player active"
+        Me.cb_pause.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
@@ -315,16 +344,16 @@ Partial Class MPCleanerForm
         Me.GroupBox3.Controls.Add(Me.rb_startup)
         Me.GroupBox3.Location = New System.Drawing.Point(7, 145)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(372, 103)
+        Me.GroupBox3.Size = New System.Drawing.Size(372, 131)
         Me.GroupBox3.TabIndex = 6
         Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Trigger"
+        Me.GroupBox3.Text = " Trigger "
         '
         'cb_delay
         '
         Me.cb_delay.FormattingEnabled = True
         Me.cb_delay.Items.AddRange(New Object() {"seconds", "minutes", "hours"})
-        Me.cb_delay.Location = New System.Drawing.Point(266, 20)
+        Me.cb_delay.Location = New System.Drawing.Point(275, 30)
         Me.cb_delay.Name = "cb_delay"
         Me.cb_delay.Size = New System.Drawing.Size(80, 24)
         Me.cb_delay.TabIndex = 12
@@ -332,16 +361,16 @@ Partial Class MPCleanerForm
         '
         'nud_delay
         '
-        Me.nud_delay.Location = New System.Drawing.Point(226, 21)
+        Me.nud_delay.Location = New System.Drawing.Point(226, 31)
         Me.nud_delay.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
         Me.nud_delay.Name = "nud_delay"
-        Me.nud_delay.Size = New System.Drawing.Size(36, 22)
+        Me.nud_delay.Size = New System.Drawing.Size(44, 22)
         Me.nud_delay.TabIndex = 11
         Me.nud_delay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'mtb_cpu
         '
-        Me.mtb_cpu.Location = New System.Drawing.Point(176, 45)
+        Me.mtb_cpu.Location = New System.Drawing.Point(176, 60)
         Me.mtb_cpu.Mask = "00%"
         Me.mtb_cpu.Name = "mtb_cpu"
         Me.mtb_cpu.Size = New System.Drawing.Size(34, 22)
@@ -352,7 +381,7 @@ Partial Class MPCleanerForm
         'rb_cpu
         '
         Me.rb_cpu.AutoSize = True
-        Me.rb_cpu.Location = New System.Drawing.Point(11, 47)
+        Me.rb_cpu.Location = New System.Drawing.Point(11, 62)
         Me.rb_cpu.Name = "rb_cpu"
         Me.rb_cpu.Size = New System.Drawing.Size(168, 20)
         Me.rb_cpu.TabIndex = 8
@@ -362,7 +391,7 @@ Partial Class MPCleanerForm
         '
         'mtb_time
         '
-        Me.mtb_time.Location = New System.Drawing.Point(44, 72)
+        Me.mtb_time.Location = New System.Drawing.Point(44, 91)
         Me.mtb_time.Mask = "00:00"
         Me.mtb_time.Name = "mtb_time"
         Me.mtb_time.Size = New System.Drawing.Size(39, 22)
@@ -374,7 +403,7 @@ Partial Class MPCleanerForm
         'rb_time
         '
         Me.rb_time.AutoSize = True
-        Me.rb_time.Location = New System.Drawing.Point(11, 73)
+        Me.rb_time.Location = New System.Drawing.Point(11, 92)
         Me.rb_time.Name = "rb_time"
         Me.rb_time.Size = New System.Drawing.Size(37, 20)
         Me.rb_time.TabIndex = 1
@@ -385,7 +414,7 @@ Partial Class MPCleanerForm
         'rb_startup
         '
         Me.rb_startup.AutoSize = True
-        Me.rb_startup.Location = New System.Drawing.Point(11, 21)
+        Me.rb_startup.Location = New System.Drawing.Point(11, 31)
         Me.rb_startup.Name = "rb_startup"
         Me.rb_startup.Size = New System.Drawing.Size(220, 20)
         Me.rb_startup.TabIndex = 0
@@ -401,10 +430,10 @@ Partial Class MPCleanerForm
         Me.GroupBox2.Controls.Add(Me.rb_daily)
         Me.GroupBox2.Location = New System.Drawing.Point(7, 7)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(372, 134)
+        Me.GroupBox2.Size = New System.Drawing.Size(179, 134)
         Me.GroupBox2.TabIndex = 0
         Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Periodicity"
+        Me.GroupBox2.Text = " Periodicity "
         '
         'rb_always
         '
@@ -450,30 +479,42 @@ Partial Class MPCleanerForm
         Me.rb_daily.Text = "Daily"
         Me.rb_daily.UseVisualStyleBackColor = True
         '
+        'b_clean
+        '
+        Me.b_clean.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.b_clean.Location = New System.Drawing.Point(159, 333)
+        Me.b_clean.Name = "b_clean"
+        Me.b_clean.Size = New System.Drawing.Size(75, 23)
+        Me.b_clean.TabIndex = 63
+        Me.b_clean.Text = "Clean Now"
+        Me.b_clean.UseVisualStyleBackColor = True
+        '
         'MPCleanerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(400, 421)
+        Me.ClientSize = New System.Drawing.Size(400, 365)
+        Me.Controls.Add(Me.b_clean)
         Me.Controls.Add(Me.Cancel)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Save)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MPCleanerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MPCleaner v1.1.0.7"
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.Text = "MPCleaner v1.1.0.8"
         Me.TabControl1.ResumeLayout(False)
         Me.Plugins.ResumeLayout(False)
         Me.Plugins.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         CType(Me.nud_cache, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Scheduler.ResumeLayout(False)
-        Me.Scheduler.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
         CType(Me.nud_checktrigger, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.nud_delay, System.ComponentModel.ISupportInitialize).EndInit()
@@ -486,9 +527,6 @@ Partial Class MPCleanerForm
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Save As System.Windows.Forms.Button
     Friend WithEvents Cancel As System.Windows.Forms.Button
-    Friend WithEvents Deletepermanent As System.Windows.Forms.RadioButton
-    Friend WithEvents Deletetotrash As System.Windows.Forms.RadioButton
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents Plugins As System.Windows.Forms.TabPage
     Friend WithEvents cb_MyEmulator As System.Windows.Forms.CheckBox
@@ -510,11 +548,17 @@ Partial Class MPCleanerForm
     Friend WithEvents rb_time As System.Windows.Forms.RadioButton
     Friend WithEvents rb_startup As System.Windows.Forms.RadioButton
     Friend WithEvents nud_checktrigger As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents cb_checktrigger As System.Windows.Forms.ComboBox
     Friend WithEvents cb_delay As System.Windows.Forms.ComboBox
     Friend WithEvents nud_delay As System.Windows.Forms.NumericUpDown
     Friend WithEvents cb_cache As System.Windows.Forms.ComboBox
     Friend WithEvents nud_cache As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents cb_pause As System.Windows.Forms.CheckBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents Deletetotrash As System.Windows.Forms.RadioButton
+    Friend WithEvents Deletepermanent As System.Windows.Forms.RadioButton
+    Friend WithEvents b_clean As System.Windows.Forms.Button
 End Class
