@@ -353,7 +353,15 @@ A compete scheduler has been included to select when plugins should run.
 
 
 
+
+
+
+
 TVSeries Episode thumb nails whose respective episode was deleted will also be cleaned up.
+
+
+
+
 
 
 
@@ -363,13 +371,23 @@ A compete scheduler has been included to select when plugins should run.
 
 
 
+
+
+
+
+
+
 ** Fixed a bug reported by Luca Brasi in thread #40 of forum. **
+
+
 
 ** Fixed issue with version number mixup **
 
+
+
 ** Fixed a further issue reported by Luca Brasi. **</VersionDescription>
         <DevelopmentStatus>Stable</DevelopmentStatus>
-        <OnlineLocation>http://www.team-mediaportal.com/index.php?option=com_mtree&amp;task=att_download&amp;link_id=225&amp;cf_id=24</OnlineLocation>
+        <OnlineLocation>https://mpcleaner-plugin.googlecode.com/files/MPCleaner-v1.1.0.8.mpe1</OnlineLocation>
         <ReleaseDate>2013-04-28T09:16:27</ReleaseDate>
         <Tags>movingpictures;tvseries,youtube.fm;music;fanart;cleaner</Tags>
         <Location>E:\Software\MediaPortal\MPCleaner\[Name]-v[Version].mpe1</Location>
