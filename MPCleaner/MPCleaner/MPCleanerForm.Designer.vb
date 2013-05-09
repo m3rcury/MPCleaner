@@ -503,7 +503,7 @@ Partial Class MPCleanerForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MPCleanerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MPCleaner v1.1.0.8"
+        Me.Text = "MPCleaner v1.1.0.9"
         Me.TabControl1.ResumeLayout(False)
         Me.Plugins.ResumeLayout(False)
         Me.Plugins.PerformLayout()
