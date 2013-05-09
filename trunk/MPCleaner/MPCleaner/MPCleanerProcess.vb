@@ -337,8 +337,6 @@ Public Class MPCleanerProcess
 
             For Each dirpath As String In IO.Directory.GetDirectories(newpath)
 
-
-
                 Dim dirname As String = IO.Path.GetFileName(dirpath)
 
                 DeleteFanart_file(dirpath & "\Episodes", List, "filename", text, dirname & "\Episodes\")
@@ -359,13 +357,13 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "dvdart.db3") Then
+        If Not FileSystem.FileExists(_database & "dvdart.db3") Then
             Exit Sub
         End If
 
         Log.Info("MPCleaner: processing DVDArt (MovingPictures) - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "dvdart.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database & "dvdart.db3;Read Only=True;"
         SQLconnect.Open()
         SQLcommand = SQLconnect.CreateCommand
         SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies WHERE imdb_id <> ''"
@@ -421,16 +419,16 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "dvdart.db3") Then
+        If Not FileSystem.FileExists(_database & "dvdart.db3") Then
             Exit Sub
         End If
 
         Log.Info("MPCleaner: processing DVDArt (TVSeries) - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "dvdart.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database & "dvdart.db3;Read Only=True;"
         SQLconnect.Open()
         SQLcommand = SQLconnect.CreateCommand
-        SQLcommand.CommandText = "SELECT imdb_id FROM processed_movies WHERE imdb_id <> ''"
+        SQLcommand.CommandText = "SELECT thetvdb_id FROM processed_series WHERE thetvdb_id <> ''"
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
@@ -475,13 +473,13 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "movingpictures.db3") Then
+        If Not FileSystem.FileExists(_database & "movingpictures.db3") Then
             Exit Sub
         End If
 
         Log.Info("MPCleaner: processing movingpictures - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "movingpictures.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database & "movingpictures.db3;Read Only=True;"
         SQLconnect.Open()
         SQLcommand = SQLconnect.CreateCommand
         SQLcommand.CommandText = "SELECT alternatecovers, backdropfullpath FROM movie_info"
@@ -526,13 +524,13 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "TVSeriesDatabase4.db3") Then
+        If Not FileSystem.FileExists(_database & "TVSeriesDatabase4.db3") Then
             Exit Sub
         End If
 
         Log.Info("MPCleaner: processing tvseries - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "TVSeriesDatabase4.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database & "TVSeriesDatabase4.db3;Read Only=True;"
 
         ' check Series on disk which are not in DB
 
@@ -632,7 +630,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "YouTubeFm_Data_V01.db3") Then
+        If Not FileSystem.FileExists(_database & "YouTubeFm_Data_V01.db3") Then
             Exit Sub
         End If
 
@@ -640,7 +638,7 @@ Public Class MPCleanerProcess
 
         ' check Artist images on disk which are not in DB
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "YouTubeFm_Data_V01.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database + "YouTubeFm_Data_V01.db3;Read Only=True;"
         SQLconnect.Open()
         SQLcommand = SQLconnect.CreateCommand
         SQLcommand.CommandText = "SELECT artist_name FROM artists"
@@ -680,16 +678,16 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database + "FanartHandler.db3") Then
+        If Not FileSystem.FileExists(_database & "FanartHandler.db3") Then
             Exit Sub
         End If
 
         Log.Info("MPCleaner: processing music - start.")
 
-        SQLconnect.ConnectionString = "Data Source=" + _database + "FanartHandler.db3"
+        SQLconnect.ConnectionString = "Data Source=" & _database & "FanartHandler.db3;Read Only=True;"
         SQLconnect.Open()
         SQLcommand = SQLconnect.CreateCommand
-        SQLcommand.CommandText = "SELECT Disk_Image FROM Music_Fanart"
+        SQLcommand.CommandText = "SELECT FullPath FROM Image WHERE Category LIKE '%usic%'"
         SQLreader = SQLcommand.ExecuteReader()
 
         Array.Clear(List, 0, 2)
