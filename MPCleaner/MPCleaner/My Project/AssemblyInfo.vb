@@ -22,7 +22,7 @@ Imports MediaPortal.Common.Utils
 <Assembly: Guid("f2d48767-cee6-4a41-829c-e182be016615")> 
 
 'MediaPortal compatibility
-<Assembly: CompatibleVersion("1.2.100.0", "1.1.6.27644")> 
+<Assembly: CompatibleVersion("1.3.100.0", "1.1.6.27644")> 
 <Assembly: UsesSubsystem("MP.SkinEngine")> 
 <Assembly: UsesSubsystem("MP.Config")> 
 
@@ -37,5 +37,5 @@ Imports MediaPortal.Common.Utils
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.1.0.9")> 
-<Assembly: AssemblyFileVersion("1.1.0.9")> 
+<Assembly: AssemblyVersion("1.1.0.10")> 
+<Assembly: AssemblyFileVersion("1.1.0.10")> 
