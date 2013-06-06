@@ -60,6 +60,7 @@ Partial Class MPCleanerForm
         Me.rb_weekly = New System.Windows.Forms.RadioButton()
         Me.rb_daily = New System.Windows.Forms.RadioButton()
         Me.b_clean = New System.Windows.Forms.Button()
+        Me.cb_Pictures = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.Plugins.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -118,6 +119,7 @@ Partial Class MPCleanerForm
         'Plugins
         '
         Me.Plugins.BackColor = System.Drawing.Color.Transparent
+        Me.Plugins.Controls.Add(Me.cb_Pictures)
         Me.Plugins.Controls.Add(Me.GroupBox1)
         Me.Plugins.Controls.Add(Me.cb_cache)
         Me.Plugins.Controls.Add(Me.nud_cache)
@@ -201,7 +203,7 @@ Partial Class MPCleanerForm
         '
         Me.cb_MyEmulator.AutoSize = True
         Me.cb_MyEmulator.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cb_MyEmulator.Location = New System.Drawing.Point(232, 77)
+        Me.cb_MyEmulator.Location = New System.Drawing.Point(232, 105)
         Me.cb_MyEmulator.Name = "cb_MyEmulator"
         Me.cb_MyEmulator.Size = New System.Drawing.Size(111, 22)
         Me.cb_MyEmulator.TabIndex = 67
@@ -489,6 +491,17 @@ Partial Class MPCleanerForm
         Me.b_clean.Text = "Clean Now"
         Me.b_clean.UseVisualStyleBackColor = True
         '
+        'cb_Pictures
+        '
+        Me.cb_Pictures.AutoSize = True
+        Me.cb_Pictures.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_Pictures.Location = New System.Drawing.Point(232, 77)
+        Me.cb_Pictures.Name = "cb_Pictures"
+        Me.cb_Pictures.Size = New System.Drawing.Size(81, 22)
+        Me.cb_Pictures.TabIndex = 72
+        Me.cb_Pictures.Text = "Pictures"
+        Me.cb_Pictures.UseVisualStyleBackColor = True
+        '
         'MPCleanerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -503,7 +516,7 @@ Partial Class MPCleanerForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MPCleanerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MPCleaner v1.1.0.10"
+        Me.Text = "MPCleaner v1.1.0.11"
         Me.TabControl1.ResumeLayout(False)
         Me.Plugins.ResumeLayout(False)
         Me.Plugins.PerformLayout()
@@ -561,4 +574,5 @@ Partial Class MPCleanerForm
     Friend WithEvents Deletetotrash As System.Windows.Forms.RadioButton
     Friend WithEvents Deletepermanent As System.Windows.Forms.RadioButton
     Friend WithEvents b_clean As System.Windows.Forms.Button
+    Friend WithEvents cb_Pictures As System.Windows.Forms.CheckBox
 End Class
