@@ -19,6 +19,7 @@ Public Class MPCleanerForm
             cb_MovingPictures.Checked = XMLreader.GetValueAsBool("Plugins", "MovingPictures", False)
             cb_TVSeries.Checked = XMLreader.GetValueAsBool("Plugins", "TVSeries", False)
             cb_Music.Checked = XMLreader.GetValueAsBool("Plugins", "Music", False)
+            cb_Pictures.Checked = XMLreader.GetValueAsBool("Plugins", "Pictures", False)
             cb_YouTubefm.Checked = XMLreader.GetValueAsBool("Plugins", "YouTubefm", False)
             cb_MyEmulator.Checked = XMLreader.GetValueAsBool("Plugins", "MyEmulator", False)
             _cache = XMLreader.GetValueAsInt("Plugins", "cache", 1)
@@ -89,6 +90,7 @@ Public Class MPCleanerForm
             XMLwriter.SetValueAsBool("Plugins", "MovingPictures", cb_MovingPictures.Checked)
             XMLwriter.SetValueAsBool("Plugins", "TVSeries", cb_TVSeries.Checked)
             XMLwriter.SetValueAsBool("Plugins", "Music", cb_Music.Checked)
+            XMLwriter.SetValueAsBool("Plugins", "Pictures", cb_Pictures.Checked)
             XMLwriter.SetValueAsBool("Plugins", "YouTubefm", cb_YouTubefm.Checked)
             XMLwriter.SetValueAsBool("Plugins", "MyEmulator", cb_MyEmulator.Checked)
             XMLwriter.SetValue("Plugins", "cache", nud_cache.Value)
@@ -130,6 +132,8 @@ Public Class MPCleanerForm
 
     Private Sub b_clean_Click(sender As System.Object, e As System.EventArgs) Handles b_clean.Click
 
+        Me.Cursor = Windows.Forms.Cursors.WaitCursor
+
         setSettings()
 
         _clean_now = True
@@ -138,6 +142,8 @@ Public Class MPCleanerForm
         mpc.MPCleanerProcess()
 
         _clean_now = False
+
+        Me.Cursor = Windows.Forms.Cursors.Default
 
     End Sub
 

@@ -1,16 +1,19 @@
 ﻿Imports MediaPortal.Configuration
 Imports MediaPortal.GUI.Library
+Imports MediaPortal.Util
 
 Imports Microsoft.VisualBasic.FileIO
 
+Imports System.IO
 Imports System.Data.SQLite
+Imports System.Threading
 
 Public Class MPCleanerProcess
 
     Dim _cache As Integer
     Dim checkplayer As Integer = 60
     Dim _database, _thumbs, delete, cache_value As String
-    Dim movingpictures, tvseries, music, youtubefm, trash, pause As Boolean
+    Dim movingpictures, tvseries, music, pictures, youtubefm, trash, pause As Boolean
 
     Public Function CPU_Usage_Percent() As String
 
@@ -45,7 +48,7 @@ Public Class MPCleanerProcess
 
         Dim file As String = Config.GetFile(Config.Dir.Config, "MPCleaner.xml")
 
-        If Not FileSystem.FileExists(file) Then Return
+        If Not IO.File.Exists(file) Then Return
 
         ' set default delete to trash
         trash = True
@@ -73,6 +76,7 @@ Public Class MPCleanerProcess
             movingpictures = XMLreader.GetValueAsBool("Plugins", "MovingPictures", False)
             tvseries = XMLreader.GetValueAsBool("Plugins", "TVSeries", False)
             music = XMLreader.GetValueAsBool("Plugins", "Music", False)
+            pictures = XMLreader.GetValueAsBool("Plugins", "Pictures", False)
             youtubefm = XMLreader.GetValueAsBool("Plugins", "YouTubefm", False)
             _cache = XMLreader.GetValueAsInt("Plugins", "cache", 1)
             cache_value = XMLreader.GetValueAsString("Plugins", "cache value", "months")
@@ -110,8 +114,6 @@ Public Class MPCleanerProcess
         End If
 
         Do
-
-            ' ********* to enhance sleep/wake when periodicity is not always *********
 
             Log.Info("MPCleaner: process plugin last run on " & lastrun)
 
@@ -164,13 +166,37 @@ Public Class MPCleanerProcess
                     Log.Info("MPCleaner: process plugin starting execution immediately.")
                 End If
 
+                ' define cleaner threads
+                Dim cleanerThread(6) As Thread
+
+                cleanerThread(0) = New Thread(AddressOf Process_MovingPictures)
+                cleanerThread(1) = New Thread(AddressOf Process_DVDArt1)
+                cleanerThread(2) = New Thread(AddressOf Process_TVSeries)
+                cleanerThread(3) = New Thread(AddressOf Process_DVDArt2)
+                cleanerThread(4) = New Thread(AddressOf Process_YouTubefm)
+                cleanerThread(5) = New Thread(AddressOf Process_Music)
+                cleanerThread(6) = New Thread(AddressOf Process_Pictures)
+
                 ' call the cleaning processes
-                If movingpictures Then Process_MovingPictures()
-                If movingpictures Then Process_DVDArt1()
-                If tvseries Then Process_TVSeries()
-                If tvseries Then Process_DVDArt2()
-                If youtubefm Then Process_YouTubefm()
-                If music Then Process_Music()
+                If movingpictures Then cleanerThread(0).Start()
+                If movingpictures Then cleanerThread(1).Start()
+                If tvseries Then cleanerThread(2).Start()
+                If tvseries Then cleanerThread(3).Start()
+                If youtubefm Then cleanerThread(4).Start()
+                If music Then cleanerThread(5).Start()
+                If pictures Then cleanerThread(6).Start()
+
+                Dim active As Boolean = True
+
+                Do While active
+                    active = False
+                    For x As Integer = 0 To 6
+                        If cleanerThread(x).IsAlive Then
+                            active = True
+                            wait(5, False)
+                        End If
+                    Next
+                Loop
 
                 ' update xml with last run date
 
@@ -188,8 +214,9 @@ Public Class MPCleanerProcess
 
             Log.Info("MPCleaner: process plugin complete.")
 
-            _already_executed = True
+            If MPCleanerForm._clean_now Then Exit Do
 
+            _already_executed = True
 
             If when_to_run <> 0 Then
                 ' pause for next iteration
@@ -206,7 +233,7 @@ Public Class MPCleanerProcess
 
     Private Sub DeleteFanart_file_by_date(ByVal newpath As String, ByVal text As String)
 
-        If FileSystem.DirectoryExists(newpath) Then
+        If IO.Directory.Exists(newpath) Then
 
             On Error Resume Next
 
@@ -251,7 +278,7 @@ Public Class MPCleanerProcess
 
     Private Sub DeleteFanart_file(ByVal newpath As String, ByRef List As String, ByVal match As String, ByVal text As String, Optional ByVal diradd As String = Nothing)
 
-        If FileSystem.DirectoryExists(newpath) Then
+        If IO.Directory.Exists(newpath) Then
 
             On Error Resume Next
 
@@ -298,7 +325,7 @@ Public Class MPCleanerProcess
 
     Private Sub DeleteFanart_dir(ByVal newpath As String, ByRef List As String, ByVal text As String)
 
-        If FileSystem.DirectoryExists(newpath) Then
+        If IO.Directory.Exists(newpath) Then
 
             On Error Resume Next
 
@@ -333,7 +360,7 @@ Public Class MPCleanerProcess
 
     Private Sub DeleteFanart_subdir(ByVal newpath As String, ByRef List As String, ByVal text As String)
 
-        If FileSystem.DirectoryExists(newpath) Then
+        If IO.Directory.Exists(newpath) Then
 
             For Each dirpath As String In IO.Directory.GetDirectories(newpath)
 
@@ -347,6 +374,37 @@ Public Class MPCleanerProcess
 
     End Sub
 
+    Private Sub DeletePicture_thumbs(ByRef thumbnails As Array)
+
+        On Error Resume Next
+
+        Log.Info("MPCleaner: processing Pictures - start")
+
+        Dim path As String = _thumbs & "Pictures"
+        Dim counter As Integer
+
+        For Each file As String In IO.Directory.GetFiles(path, "*.*", IO.SearchOption.AllDirectories)
+
+            CheckPlayerplaying(checkplayer)
+
+            If Array.IndexOf(thumbnails, file) = -1 Then
+
+                counter += 1
+
+                If trash Then
+                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin)
+                Else
+                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently)
+                End If
+
+            End If
+
+        Next
+
+        Log.Info("MPCleaner: processing Pictures - complete. Images deleted " & delete & ": " & counter)
+
+    End Sub
+
     Private Sub Process_DVDArt1()
 
         Dim newpath, List(1) As String
@@ -357,7 +415,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "dvdart.db3") Then
+        If Not IO.File.Exists(_database & "dvdart.db3") Then
             Exit Sub
         End If
 
@@ -419,7 +477,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "dvdart.db3") Then
+        If Not IO.File.Exists(_database & "dvdart.db3") Then
             Exit Sub
         End If
 
@@ -473,7 +531,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "movingpictures.db3") Then
+        If Not IO.File.Exists(_database & "movingpictures.db3") Then
             Exit Sub
         End If
 
@@ -524,7 +582,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "TVSeriesDatabase4.db3") Then
+        If Not IO.File.Exists(_database & "TVSeriesDatabase4.db3") Then
             Exit Sub
         End If
 
@@ -630,7 +688,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "YouTubeFm_Data_V01.db3") Then
+        If Not IO.File.Exists(_database & "YouTubeFm_Data_V01.db3") Then
             Exit Sub
         End If
 
@@ -678,7 +736,7 @@ Public Class MPCleanerProcess
         Dim SQLcommand As SQLiteCommand
         Dim SQLreader As SQLiteDataReader
 
-        If Not FileSystem.FileExists(_database & "FanartHandler.db3") Then
+        If Not IO.File.Exists(_database & "FanartHandler.db3") Then
             Exit Sub
         End If
 
@@ -714,6 +772,49 @@ Public Class MPCleanerProcess
         DeleteFanart_file_by_date(newpath, "Youtube.Fm\Cache")
 
         Log.Info("MPCleaner: processing music - complete.")
+
+    End Sub
+
+    Private Sub Process_Pictures()
+
+        Dim thumbnailImage() As String = Nothing
+        Dim x As Integer = -1
+
+        ' populate picture list
+
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLiteCommand
+        Dim SQLreader As SQLiteDataReader
+
+        If Not IO.File.Exists(_database & "PictureDatabase.db3") Then
+            Exit Sub
+        End If
+
+        Log.Info("MPCleaner: processing pictures - start.")
+
+        SQLconnect.ConnectionString = "Data Source=" & _database & "PictureDatabase.db3;Read Only=True;"
+        SQLconnect.Open()
+        SQLcommand = SQLconnect.CreateCommand
+        SQLcommand.CommandText = "SELECT strFile FROM picture"
+        SQLreader = SQLcommand.ExecuteReader()
+
+        While SQLreader.Read()
+
+            If IO.File.Exists(SQLreader(0)) Then
+                x += 1
+                ReDim Preserve thumbnailImage(x + 1)
+                thumbnailImage(x) = Utils.GetPicturesThumbPathname(SQLreader(0))
+                x += 1
+                thumbnailImage(x) = Utils.GetPicturesLargeThumbPathname(SQLreader(0))
+            End If
+
+        End While
+
+        SQLconnect.Close()
+
+        DeletePicture_thumbs(thumbnailImage)
+
+        Log.Info("MPCleaner: processing pictures - complete.")
 
     End Sub
 
