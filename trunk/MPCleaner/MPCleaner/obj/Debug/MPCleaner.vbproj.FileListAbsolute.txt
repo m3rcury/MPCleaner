@@ -31,3 +31,16 @@ I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\M
 I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.MPCleanerForm.resources
 I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource-ResGen.read.1.tlog
 I:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Debug\GenerateResource-ResGen.write.1.tlog
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.pdb
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\MPCleaner.xml
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\MyFilms.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\System.Data.SQLite.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Debug\SubCentral.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.vbprojResolveAssemblyReference.cache
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.MPCleanerForm.resources
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.Resources.resources
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.vbproj.GenerateResource.Cache
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.xml
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Debug\MPCleaner.pdb

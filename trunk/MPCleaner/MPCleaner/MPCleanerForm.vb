@@ -16,12 +16,12 @@ Public Class MPCleanerForm
 
             Deletetotrash.Checked = XMLreader.GetValueAsBool("Delete", "trash", True)
 
-            cb_MovingPictures.Checked = XMLreader.GetValueAsBool("Plugins", "MovingPictures", False)
+            cb_Movies.Checked = XMLreader.GetValueAsBool("Plugins", "MovingPictures", False)
             cb_TVSeries.Checked = XMLreader.GetValueAsBool("Plugins", "TVSeries", False)
             cb_Music.Checked = XMLreader.GetValueAsBool("Plugins", "Music", False)
             cb_Pictures.Checked = XMLreader.GetValueAsBool("Plugins", "Pictures", False)
+            cb_Videos.Checked = XMLreader.GetValueAsBool("Plugins", "Videos", False)
             cb_YouTubefm.Checked = XMLreader.GetValueAsBool("Plugins", "YouTubefm", False)
-            cb_MyEmulator.Checked = XMLreader.GetValueAsBool("Plugins", "MyEmulator", False)
             _cache = XMLreader.GetValueAsInt("Plugins", "cache", 1)
             cache_value = XMLreader.GetValueAsString("Plugins", "cache value", "months")
 
@@ -87,12 +87,12 @@ Public Class MPCleanerForm
 
             XMLwriter.SetValueAsBool("Delete", "trash", Deletetotrash.Checked)
 
-            XMLwriter.SetValueAsBool("Plugins", "MovingPictures", cb_MovingPictures.Checked)
+            XMLwriter.SetValueAsBool("Plugins", "MovingPictures", cb_Movies.Checked)
             XMLwriter.SetValueAsBool("Plugins", "TVSeries", cb_TVSeries.Checked)
             XMLwriter.SetValueAsBool("Plugins", "Music", cb_Music.Checked)
             XMLwriter.SetValueAsBool("Plugins", "Pictures", cb_Pictures.Checked)
+            XMLwriter.SetValueAsBool("Plugins", "Videos", cb_Videos.Checked)
             XMLwriter.SetValueAsBool("Plugins", "YouTubefm", cb_YouTubefm.Checked)
-            XMLwriter.SetValueAsBool("Plugins", "MyEmulator", cb_MyEmulator.Checked)
             XMLwriter.SetValue("Plugins", "cache", nud_cache.Value)
             XMLwriter.SetValue("Plugins", "cache value", cb_cache.SelectedItem.ToString)
 
@@ -144,6 +144,8 @@ Public Class MPCleanerForm
         _clean_now = False
 
         Me.Cursor = Windows.Forms.Cursors.Default
+
+        MsgBox("Cleanup Complete", MsgBoxStyle.Information)
 
     End Sub
 

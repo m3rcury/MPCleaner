@@ -47,3 +47,16 @@ E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.pdb
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.exe
 E:\Rudolph\Documents\Visual Studio 2010\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.exe
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.pdb
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\MPCleaner.xml
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\MyFilms.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\System.Data.SQLite.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\bin\Release\SubCentral.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.vbprojResolveAssemblyReference.cache
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.MPCleanerForm.resources
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.Resources.resources
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.vbproj.GenerateResource.Cache
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.dll
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.xml
+E:\Rudolph\Documents\Visual Studio 2013\Projects\MPCleaner\MPCleaner\obj\Release\MPCleaner.pdb

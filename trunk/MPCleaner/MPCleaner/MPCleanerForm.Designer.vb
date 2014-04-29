@@ -28,18 +28,19 @@ Partial Class MPCleanerForm
         Me.Cancel = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Plugins = New System.Windows.Forms.TabPage()
+        Me.cb_Videos = New System.Windows.Forms.CheckBox()
+        Me.cb_Pictures = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Deletetotrash = New System.Windows.Forms.RadioButton()
         Me.Deletepermanent = New System.Windows.Forms.RadioButton()
         Me.cb_cache = New System.Windows.Forms.ComboBox()
         Me.nud_cache = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.cb_MyEmulator = New System.Windows.Forms.CheckBox()
         Me.cb_YouTubefm = New System.Windows.Forms.CheckBox()
         Me.cb_Music = New System.Windows.Forms.CheckBox()
         Me.cb_TVSeries = New System.Windows.Forms.CheckBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.cb_MovingPictures = New System.Windows.Forms.CheckBox()
+        Me.cb_Movies = New System.Windows.Forms.CheckBox()
         Me.Scheduler = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.cb_checktrigger = New System.Windows.Forms.ComboBox()
@@ -60,7 +61,6 @@ Partial Class MPCleanerForm
         Me.rb_weekly = New System.Windows.Forms.RadioButton()
         Me.rb_daily = New System.Windows.Forms.RadioButton()
         Me.b_clean = New System.Windows.Forms.Button()
-        Me.cb_Pictures = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.Plugins.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -119,23 +119,45 @@ Partial Class MPCleanerForm
         'Plugins
         '
         Me.Plugins.BackColor = System.Drawing.Color.Transparent
+        Me.Plugins.Controls.Add(Me.cb_Videos)
         Me.Plugins.Controls.Add(Me.cb_Pictures)
         Me.Plugins.Controls.Add(Me.GroupBox1)
         Me.Plugins.Controls.Add(Me.cb_cache)
         Me.Plugins.Controls.Add(Me.nud_cache)
         Me.Plugins.Controls.Add(Me.Label3)
-        Me.Plugins.Controls.Add(Me.cb_MyEmulator)
         Me.Plugins.Controls.Add(Me.cb_YouTubefm)
         Me.Plugins.Controls.Add(Me.cb_Music)
         Me.Plugins.Controls.Add(Me.cb_TVSeries)
         Me.Plugins.Controls.Add(Me.TextBox1)
-        Me.Plugins.Controls.Add(Me.cb_MovingPictures)
+        Me.Plugins.Controls.Add(Me.cb_Movies)
         Me.Plugins.Location = New System.Drawing.Point(4, 25)
         Me.Plugins.Name = "Plugins"
         Me.Plugins.Padding = New System.Windows.Forms.Padding(3)
         Me.Plugins.Size = New System.Drawing.Size(385, 282)
         Me.Plugins.TabIndex = 1
         Me.Plugins.Text = "Plugins"
+        '
+        'cb_Videos
+        '
+        Me.cb_Videos.AutoSize = True
+        Me.cb_Videos.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_Videos.Location = New System.Drawing.Point(232, 105)
+        Me.cb_Videos.Name = "cb_Videos"
+        Me.cb_Videos.Size = New System.Drawing.Size(72, 22)
+        Me.cb_Videos.TabIndex = 73
+        Me.cb_Videos.Text = "Videos"
+        Me.cb_Videos.UseVisualStyleBackColor = True
+        '
+        'cb_Pictures
+        '
+        Me.cb_Pictures.AutoSize = True
+        Me.cb_Pictures.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_Pictures.Location = New System.Drawing.Point(232, 77)
+        Me.cb_Pictures.Name = "cb_Pictures"
+        Me.cb_Pictures.Size = New System.Drawing.Size(81, 22)
+        Me.cb_Pictures.TabIndex = 72
+        Me.cb_Pictures.Text = "Pictures"
+        Me.cb_Pictures.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
@@ -199,18 +221,6 @@ Partial Class MPCleanerForm
         Me.Label3.TabIndex = 68
         Me.Label3.Text = "Delete images  from cache folders older than"
         '
-        'cb_MyEmulator
-        '
-        Me.cb_MyEmulator.AutoSize = True
-        Me.cb_MyEmulator.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cb_MyEmulator.Location = New System.Drawing.Point(232, 105)
-        Me.cb_MyEmulator.Name = "cb_MyEmulator"
-        Me.cb_MyEmulator.Size = New System.Drawing.Size(111, 22)
-        Me.cb_MyEmulator.TabIndex = 67
-        Me.cb_MyEmulator.Text = "My Emulator"
-        Me.cb_MyEmulator.UseVisualStyleBackColor = True
-        Me.cb_MyEmulator.Visible = False
-        '
         'cb_YouTubefm
         '
         Me.cb_YouTubefm.AutoSize = True
@@ -256,16 +266,16 @@ Partial Class MPCleanerForm
         Me.TextBox1.TabIndex = 63
         Me.TextBox1.Text = "Apply Cleanup to the following Plugins"
         '
-        'cb_MovingPictures
+        'cb_Movies
         '
-        Me.cb_MovingPictures.AutoSize = True
-        Me.cb_MovingPictures.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cb_MovingPictures.Location = New System.Drawing.Point(16, 49)
-        Me.cb_MovingPictures.Name = "cb_MovingPictures"
-        Me.cb_MovingPictures.Size = New System.Drawing.Size(129, 22)
-        Me.cb_MovingPictures.TabIndex = 62
-        Me.cb_MovingPictures.Text = "MovingPictures"
-        Me.cb_MovingPictures.UseVisualStyleBackColor = True
+        Me.cb_Movies.AutoSize = True
+        Me.cb_Movies.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_Movies.Location = New System.Drawing.Point(16, 49)
+        Me.cb_Movies.Name = "cb_Movies"
+        Me.cb_Movies.Size = New System.Drawing.Size(129, 22)
+        Me.cb_Movies.TabIndex = 62
+        Me.cb_Movies.Text = "MovingPictures"
+        Me.cb_Movies.UseVisualStyleBackColor = True
         '
         'Scheduler
         '
@@ -491,17 +501,6 @@ Partial Class MPCleanerForm
         Me.b_clean.Text = "Clean Now"
         Me.b_clean.UseVisualStyleBackColor = True
         '
-        'cb_Pictures
-        '
-        Me.cb_Pictures.AutoSize = True
-        Me.cb_Pictures.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cb_Pictures.Location = New System.Drawing.Point(232, 77)
-        Me.cb_Pictures.Name = "cb_Pictures"
-        Me.cb_Pictures.Size = New System.Drawing.Size(81, 22)
-        Me.cb_Pictures.TabIndex = 72
-        Me.cb_Pictures.Text = "Pictures"
-        Me.cb_Pictures.UseVisualStyleBackColor = True
-        '
         'MPCleanerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -516,7 +515,7 @@ Partial Class MPCleanerForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MPCleanerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MPCleaner v1.1.0.11"
+        Me.Text = "MPCleaner v1.1.0.12"
         Me.TabControl1.ResumeLayout(False)
         Me.Plugins.ResumeLayout(False)
         Me.Plugins.PerformLayout()
@@ -542,12 +541,11 @@ Partial Class MPCleanerForm
     Friend WithEvents Cancel As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents Plugins As System.Windows.Forms.TabPage
-    Friend WithEvents cb_MyEmulator As System.Windows.Forms.CheckBox
     Friend WithEvents cb_YouTubefm As System.Windows.Forms.CheckBox
     Friend WithEvents cb_Music As System.Windows.Forms.CheckBox
     Friend WithEvents cb_TVSeries As System.Windows.Forms.CheckBox
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents cb_MovingPictures As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Movies As System.Windows.Forms.CheckBox
     Friend WithEvents Scheduler As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents rb_always As System.Windows.Forms.RadioButton
@@ -575,4 +573,5 @@ Partial Class MPCleanerForm
     Friend WithEvents Deletepermanent As System.Windows.Forms.RadioButton
     Friend WithEvents b_clean As System.Windows.Forms.Button
     Friend WithEvents cb_Pictures As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Videos As System.Windows.Forms.CheckBox
 End Class

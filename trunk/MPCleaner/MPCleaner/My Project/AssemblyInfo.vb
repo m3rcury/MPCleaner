@@ -13,7 +13,7 @@ Imports MediaPortal.Common.Utils
 <Assembly: AssemblyDescription("Delete unused thumbs, banners, backdrops, fanart")> 
 <Assembly: AssemblyCompany("m3rcury")> 
 <Assembly: AssemblyProduct("MPCleaner")> 
-<Assembly: AssemblyCopyright("Copyright © Home 2013")> 
+<Assembly: AssemblyCopyright("Copyright © Home 2013-2014")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -37,5 +37,5 @@ Imports MediaPortal.Common.Utils
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.1.0.11")> 
-<Assembly: AssemblyFileVersion("1.1.0.11")> 
+<Assembly: AssemblyVersion("1.1.0.12")> 
+<Assembly: AssemblyFileVersion("1.1.0.12")> 
