@@ -13,7 +13,7 @@
     <AssemblyName>MPCleaner</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,6 +33,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>MPCleaner.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -77,21 +78,22 @@
   <ItemGroup>
     <Reference Include="Common.Utils, Version=1.2.3.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Common.Utils.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MediaPortal\Common.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Core">
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Core.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MediaPortal\Core.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="MyFilms">
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MediaPortal\plugins\Windows\MyFilms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.81.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+    <Reference Include="System.Data.SQLite, Version=1.0.89.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MediaPortal\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -99,7 +101,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Utils, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Team MediaPortal\MediaPortal\Utils.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MediaPortal\Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
