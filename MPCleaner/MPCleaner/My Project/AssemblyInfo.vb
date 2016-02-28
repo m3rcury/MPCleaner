@@ -24,7 +24,7 @@ Imports MediaPortal.Common.Utils
 'MediaPortal compatibility
 <Assembly: CompatibleVersion("1.3.100.0", "1.1.6.27644")> 
 <Assembly: UsesSubsystem("MP.SkinEngine")> 
-<Assembly: UsesSubsystem("MP.Config")> 
+<Assembly: UsesSubsystem("MP.Config")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -37,5 +37,5 @@ Imports MediaPortal.Common.Utils
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.1.0.12")> 
-<Assembly: AssemblyFileVersion("1.1.0.12")> 
+<Assembly: AssemblyVersion("1.1.0.13")>
+<Assembly: AssemblyFileVersion("1.1.0.13")>

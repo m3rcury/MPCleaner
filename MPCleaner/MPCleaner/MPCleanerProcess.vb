@@ -785,6 +785,19 @@ Public Class MPCleanerProcess
 
         Log.Info("MPCleaner: processing tvseries - start.")
 
+        ' delete fanart records for removed TVSeries
+
+        Try
+            SQLconnect.ConnectionString = "Data Source=" & _database & "TVSeriesDatabase4.db3;"
+            SQLconnect.Open()
+            SQLcommand = SQLconnect.CreateCommand
+            SQLcommand.CommandText = "DELETE FROM Fanart WHERE seriesID NOT IN (SELECT ID FROM online_series)"
+            SQLcommand.ExecuteNonQuery()
+            SQLconnect.Close()
+        Catch ex As Exception
+            Log.Info("MPCleaner: processing tvseries (3) - failed with error when deleting extra fanart records: " & ex.Message)
+        End Try
+
         SQLconnect.ConnectionString = "Data Source=" & _database & "TVSeriesDatabase4.db3;Read Only=True;"
 
         ' check Series on disk which are not in DB
