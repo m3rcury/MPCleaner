@@ -10,6 +10,8 @@ Imports Microsoft.VisualBasic.FileIO
 Imports System.IO
 Imports System.Data.SQLite
 Imports System.Threading
+Imports System.Security.Permissions
+Imports System.Security
 
 Public Class MPCleanerProcess
 
@@ -171,28 +173,32 @@ Public Class MPCleanerProcess
                 End If
 
                 ' define cleaner threads
-                Dim cleanerThread(8) As Thread
+                Dim cleanerThread(10) As Thread
 
                 cleanerThread(0) = New Thread(AddressOf Process_MovingPictures)
                 cleanerThread(1) = New Thread(AddressOf Process_DVDArt1)
                 cleanerThread(2) = New Thread(AddressOf Process_Persons)
-                cleanerThread(3) = New Thread(AddressOf Process_TVSeries)
-                cleanerThread(4) = New Thread(AddressOf Process_DVDArt2)
-                cleanerThread(5) = New Thread(AddressOf Process_YouTubefm)
-                cleanerThread(6) = New Thread(AddressOf Process_Music)
-                cleanerThread(7) = New Thread(AddressOf Process_Pictures)
-                cleanerThread(8) = New Thread(AddressOf Process_Videos)
+                cleanerThread(3) = New Thread(AddressOf Process_MovieObjects)
+                cleanerThread(4) = New Thread(AddressOf Process_TVSeries)
+                cleanerThread(5) = New Thread(AddressOf Process_DVDArt2)
+                cleanerThread(6) = New Thread(AddressOf Process_TVSeriesObjects)
+                cleanerThread(7) = New Thread(AddressOf Process_YouTubefm)
+                cleanerThread(8) = New Thread(AddressOf Process_Music)
+                cleanerThread(9) = New Thread(AddressOf Process_Pictures)
+                cleanerThread(10) = New Thread(AddressOf Process_Videos)
 
                 ' call the cleaning processes
                 If movingpictures Then cleanerThread(0).Start()
                 If movingpictures Then cleanerThread(1).Start()
                 If movingpictures Then cleanerThread(2).Start()
-                If tvseries Then cleanerThread(3).Start()
+                If movingpictures Then cleanerThread(3).Start()
                 If tvseries Then cleanerThread(4).Start()
-                If youtubefm Then cleanerThread(5).Start()
-                If music Then cleanerThread(6).Start()
-                If pictures Then cleanerThread(7).Start()
-                If videos Then cleanerThread(8).Start()
+                If tvseries Then cleanerThread(5).Start()
+                If tvseries Then cleanerThread(6).Start()
+                If youtubefm Then cleanerThread(7).Start()
+                If music Then cleanerThread(8).Start()
+                If pictures Then cleanerThread(9).Start()
+                If videos Then cleanerThread(10).Start()
 
                 Dim active As Boolean = True
 
@@ -305,8 +311,7 @@ Public Class MPCleanerProcess
                 If match = "filename" Then
                     filename = diradd & IO.Path.GetFileName(filePath)
                 ElseIf match = "filenamenosuffix" Then
-                    filename = diradd & IO.Path.GetFileName(filePath)
-                    filename = Left(filename, InStr(filename, ".") - 1)
+                    filename = diradd & IO.Path.GetFileNameWithoutExtension(filePath)
                 Else
                     filename = filePath
                 End If
@@ -326,6 +331,61 @@ Public Class MPCleanerProcess
             Next
 
             Log.Info("MPCleaner: processing " & newpath & " - complete. Images deleted " & delete & ": " & counter)
+
+        End If
+
+    End Sub
+
+    Private Sub delete_objects(ByVal newpath As String, ByRef filelist As String)
+
+        If IO.Directory.Exists(newpath) Then
+
+            'On Error Resume Next
+
+            Log.Info("MPCleaner: processing objects in " & newpath & " - start")
+
+            Dim filename As String
+            Dim fileattrib As IO.FileAttributes
+            Dim counter As Integer
+
+            For Each filePath As String In IO.Directory.GetFiles(newpath, "*.*", IO.SearchOption.AllDirectories)
+
+                CheckPlayerplaying(checkplayer)
+
+                fileattrib = IO.File.GetAttributes(filePath)
+
+                filename = "|" & IO.Path.GetFileNameWithoutExtension(filePath).ToLower & "|"
+
+                If filename = "|folder|" Then Continue For
+
+                If InStr(filelist, filename) = 0 Then
+
+                    If fileattrib <> (FileAttribute.System) And
+                       fileattrib <> (FileAttribute.System + FileAttribute.Hidden) And
+                       fileattrib <> (FileAttribute.System + FileAttribute.Hidden + FileAttribute.Archive) And
+                       fileattrib <> (FileAttribute.System + FileAttribute.Hidden + FileAttribute.Archive + FileAttribute.ReadOnly) And
+                       fileattrib <> (FileAttribute.Hidden + FileAttribute.Archive) And
+                       fileattrib <> (FileAttribute.Hidden + FileAttribute.Archive + FileAttribute.ReadOnly) And
+                       fileattrib <> (FileAttribute.Hidden + FileAttribute.ReadOnly) Then
+
+                        counter += 1
+
+                        Try
+                            If trash Then
+                                FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin)
+                            Else
+                                FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently)
+                            End If
+                        Catch ex As SecurityException
+                            Log.Info("MPCleaner: object " & filePath & " not deleted due to - " & ex.Message)
+                        End Try
+
+                    End If
+                End If
+
+            Next
+
+            Log.Info("MPCleaner: processing objects in " & newpath & " - complete. Files deleted " & delete & ": " & counter)
 
         End If
 
@@ -769,6 +829,75 @@ Public Class MPCleanerProcess
 
     End Sub
 
+    Private Sub Process_MovieObjects()
+
+        Dim filelist As String = String.Empty
+        Dim import_path As String() = Nothing
+        Dim x As Integer
+
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLiteCommand
+        Dim SQLreader As SQLiteDataReader
+
+        If Not IO.File.Exists(_database & "movingpictures.db3") Then
+            Exit Sub
+        End If
+
+        Log.Info("MPCleaner: processing movie objects - start.")
+
+        Try
+            SQLconnect.ConnectionString = "Data Source=" & _database & "movingpictures.db3;Read Only=True;"
+            SQLconnect.Open()
+            SQLcommand = SQLconnect.CreateCommand
+            SQLcommand.CommandText = "SELECT path FROM import_path WHERE internallymanaged = '0'"
+            SQLreader = SQLcommand.ExecuteReader()
+
+            x = 0
+
+            While SQLreader.Read()
+
+                x += 1
+                ReDim Preserve import_path(x)
+                import_path(x) = SQLreader(0)
+
+            End While
+
+            SQLcommand.Dispose()
+            SQLcommand.CommandText = "SELECT fullpath FROM local_media"
+            SQLreader = SQLcommand.ExecuteReader()
+
+            x = 0
+            filelist = "|"
+
+            While SQLreader.Read()
+
+                filelist &= IO.Path.GetFileNameWithoutExtension(SQLreader(0)) & "|"
+
+            End While
+
+            SQLconnect.Close()
+        Catch ex As Exception
+            Log.Info("MPCleaner: processing movie objects - failed with error: " & ex.Message)
+            Exit Sub
+        End Try
+
+        'For x = 1 To UBound(import_path)
+
+        'Dim f As New FileIOPermission(FileIOPermissionAccess.AllAccess Or FileIOPermissionAccess.Write, import_path(x))
+
+        'Try
+        'f.Demand()
+        'delete_objects(import_path(x), filelist.ToLower)
+        'Catch ex As SecurityException
+        'Log.Info("MPCleaner: processing movie delete objects - failed on path " & import_path(x) & " with exception : " & ex.Message)
+        'End Try
+
+        'Next
+
+        Log.Info("MPCleaner: processing movie objects - complete.")
+
+    End Sub
+
     Private Sub Process_TVSeries()
 
         Dim newpath, List(1) As String
@@ -899,6 +1028,75 @@ Public Class MPCleanerProcess
         delete_file(newpath, List(1), "filename", "Fan Art\cache")
 
         Log.Info("MPCleaner: processing tvseries - complete.")
+
+    End Sub
+
+    Private Sub Process_TVSeriesObjects()
+
+        Dim filelist As String = String.Empty
+        Dim import_path As String() = Nothing
+        Dim x As Integer
+
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLiteCommand
+        Dim SQLreader As SQLiteDataReader
+
+        If Not IO.File.Exists(_database & "TVSeriesDatabase4.db3") Then
+            Exit Sub
+        End If
+
+        Log.Info("MPCleaner: processing TVSeries objects - start.")
+
+        Try
+            SQLconnect.ConnectionString = "Data Source=" & _database & "TVSeriesDatabase4.db3;Read Only=True;"
+            SQLconnect.Open()
+            SQLcommand = SQLconnect.CreateCommand
+            SQLcommand.CommandText = "SELECT path FROM ImportPathes WHERE enabled = '1'"
+            SQLreader = SQLcommand.ExecuteReader()
+
+            x = 0
+
+            While SQLreader.Read()
+
+                x += 1
+                ReDim Preserve import_path(x)
+                import_path(x) = SQLreader(0)
+
+            End While
+
+            SQLcommand.Dispose()
+            SQLcommand.CommandText = "SELECT episodefilename FROM local_episodes"
+            SQLreader = SQLcommand.ExecuteReader()
+
+            x = 0
+            filelist = "|"
+
+            While SQLreader.Read()
+
+                filelist &= IO.Path.GetFileNameWithoutExtension(SQLreader(0)) & "|"
+
+            End While
+
+            SQLconnect.Close()
+        Catch ex As Exception
+            Log.Info("MPCleaner: processing TVSeries objects - failed with error: " & ex.Message)
+            Exit Sub
+        End Try
+
+        'For x = 1 To UBound(import_path)
+
+        'Dim f As New FileIOPermission(FileIOPermissionAccess.AllAccess Or FileIOPermissionAccess.Write, import_path(x))
+
+        'Try
+        'f.Demand()
+        'delete_objects(import_path(x), filelist.ToLower)
+        'Catch ex As SecurityException
+        'Log.Info("MPCleaner: processing TVSeries delete objects - failed on path " & import_path(x) & " with exception : " & ex.Message)
+        'End Try
+
+        'Next
+
+        Log.Info("MPCleaner: processing TVSeries objects - complete.")
 
     End Sub
 
